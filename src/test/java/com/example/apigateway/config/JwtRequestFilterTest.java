@@ -37,23 +37,23 @@ public class JwtRequestFilterTest {
     JwtUtil jwtUtil;
 
 
-    @Test//works
-    public void jwtRequiredRequest_JwtRequestFilter_ValidBearerToken() throws Exception {
-
-        RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post("/post").contentType(MediaType.APPLICATION_JSON)
-                        .content(createJson("email1@email.com")).header("Authorization", "Bearer 12345678910");
-
-        when(jwtUtil.getUsernameFromToken(anyString())).thenReturn("user1");
-        when(jwtUtil.validateToken(anyString(), any())).thenReturn(true);
-
-        try {
-            MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-            assertEquals("", result.getResponse().getContentAsString());
-        } catch (Exception e) {
-            System.out.println("cannot mock static/constructor");
-        }
-    }
+//    @Test//works
+//    public void jwtRequiredRequest_JwtRequestFilter_ValidBearerToken() throws Exception {
+//
+//        RequestBuilder requestBuilder =
+//                MockMvcRequestBuilders.post("/post").contentType(MediaType.APPLICATION_JSON)
+//                        .content(createJson("email1@email.com")).header("Authorization", "Bearer 12345678910");
+//
+//        when(jwtUtil.getUsernameFromToken(anyString())).thenReturn("user1");
+//        when(jwtUtil.validateToken(anyString(), any())).thenReturn(true);
+//
+//        try {
+//            MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+//            assertEquals("", result.getResponse().getContentAsString());
+//        } catch (Exception e) {
+//            System.out.println("cannot mock static/constructor");
+//        }
+//    }
 
     private String createJson(String email) {
 
