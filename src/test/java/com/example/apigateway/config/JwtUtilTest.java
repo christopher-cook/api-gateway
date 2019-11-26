@@ -43,14 +43,14 @@ public class JwtUtilTest {
 //        assertTrue(token.length() > 0);
 //    }
 
-    @Test
-    public void getUsernameFromToken_Username_Success() {
-
-        when(userDetails.getUsername()).thenReturn("testUser");
-        String token = jwtUtil.generateToken(userDetails);
-        String username = jwtUtil.getUsernameFromToken(token);
-        assertEquals("testUser", username);
-    }
+//    @Test
+//    public void getUsernameFromToken_Username_Success() {
+//
+//        when(userDetails.getUsername()).thenReturn("testUser");
+//        String token = jwtUtil.generateToken(userDetails);
+//        String username = jwtUtil.getUsernameFromToken(token);
+//        assertEquals("testUser", username);
+//    }
 
 //    @Test
 //    public void validateToken_Boolean_Success() {
