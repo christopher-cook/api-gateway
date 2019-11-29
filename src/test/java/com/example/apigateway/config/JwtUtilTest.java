@@ -34,32 +34,32 @@ public class JwtUtilTest {
         jwtUtil.setSecret("pancakes");
     }
 
-//    @Test
-//    public void generateToken_TokenString_Success() {
-//
-//        when(userDetails.getUsername()).thenReturn("testUser");
-//        String token = jwtUtil.generateToken(userDetails);
-//        assertNotNull(token);
-//        assertTrue(token.length() > 0);
-//    }
+    @Test
+    public void generateToken_TokenString_Success() {
 
-//    @Test
-//    public void getUsernameFromToken_Username_Success() {
-//
-//        when(userDetails.getUsername()).thenReturn("testUser");
-//        String token = jwtUtil.generateToken(userDetails);
-//        String username = jwtUtil.getUsernameFromToken(token);
-//        assertEquals("testUser", username);
-//    }
+        when(userDetails.getUsername()).thenReturn("testUser");
+        String token = jwtUtil.generateToken(userDetails);
+        assertNotNull(token);
+        assertTrue(token.length() > 0);
+    }
 
-//    @Test
-//    public void validateToken_Boolean_Success() {
-//
-//        when(userDetails.getUsername()).thenReturn("testUser");
-//        String token = jwtUtil.generateToken(userDetails);
-//        Boolean isValid = jwtUtil.validateToken(token, userDetails);
-//        assertTrue(isValid);
-//    }
+    @Test
+    public void getUsernameFromToken_Username_Success() {
+
+        when(userDetails.getUsername()).thenReturn("testUser");
+        String token = jwtUtil.generateToken(userDetails);
+        String username = jwtUtil.getUsernameFromToken(token);
+        assertEquals("testUser", username);
+    }
+
+    @Test
+    public void validateToken_Boolean_Success() {
+
+        when(userDetails.getUsername()).thenReturn("testUser");
+        String token = jwtUtil.generateToken(userDetails);
+        Boolean isValid = jwtUtil.validateToken(token, userDetails);
+        assertTrue(isValid);
+    }
 
     @Test
     public void getExpirationDateFromToken_Date_Success() {
