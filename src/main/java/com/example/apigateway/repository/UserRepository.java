@@ -1,9 +1,7 @@
 package com.example.apigateway.repository;
 
 import com.example.apigateway.bean.UserBean;
-import java.sql.ResultSet;
 
-//import com.example.apigateway.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
