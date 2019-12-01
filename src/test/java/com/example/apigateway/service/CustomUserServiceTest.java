@@ -1,0 +1,56 @@
+package com.example.apigateway.service;
+
+import com.example.apigateway.bean.UserBean;
+import com.example.apigateway.repository.UserRepository;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+
+public class CustomUserServiceTest {
+    @InjectMocks
+    CustomUserService customUserService;
+
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
+
+    @Mock
+    UserRepository userRepository;
+
+    @InjectMocks
+    UserBean user;
+
+    @Mock
+    PasswordEncoder bCryptPasswordEncoder;
+    @Mock
+    UserDetails userDetails;
+
+    @Before
+    public void init() {
+        user.setId(1L);
+        user.setEmail("test@bean.com");
+        user.setUsername("chris");
+        user.setPassword("testPass");
+    }
+
+    @Test
+    public void loadUser_Successful(){
+        when(userRepository.getUserByUsername(anyString())).thenReturn(user);
+        when(bCryptPasswordEncoder.encode(user.getPassword())).thenReturn("potatoe");
+
+        UserDetails userDetails = customUserService.loadUserByUsername("chris");
+        assertEquals(user.getUsername(), userDetails.getUsername());
+    }
+    
+}
