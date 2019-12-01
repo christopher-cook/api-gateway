@@ -6,7 +6,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -58,4 +57,30 @@ public class JwtRequestFilterTest {
 
         return "{\"additionalEmail\":\"" + email + "\"" + "}";
     }
+
+    @Test
+    public void jwtRequiredRequest_JwtRequestFilter_EmptyBearerToken() throws Exception {
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/profile")
+                .contentType(MediaType.APPLICATION_JSON).content(createJson("email1@email.com"));
+
+        try {
+            MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+            assertEquals("", result.getResponse().getContentAsString());
+        } catch (Exception e) {
+            System.out.println("Missing Bearer Token");
+        }
+    }
+    @Test
+    public void jwtRequired_JwtRequestFilter_IllegalBearerToken() throws Exception {
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/profile").contentType(MediaType.APPLICATION_JSON)
+                        .content(createJson("email1@email.com")).header("Authorization", "Bearer 12345678910");
+        try {
+            MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+            assertEquals("", result.getResponse().getContentAsString());
+        } catch (Exception e){
+            System.out.println("invalid bearer token");
+        }
+    }
+
 }
