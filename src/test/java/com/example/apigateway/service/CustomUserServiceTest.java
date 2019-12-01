@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 
 
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -46,11 +47,15 @@ public class CustomUserServiceTest {
 
     @Test
     public void loadUser_Successful(){
+        assertNotNull(user);
         when(userRepository.getUserByUsername(anyString())).thenReturn(user);
         when(bCryptPasswordEncoder.encode(user.getPassword())).thenReturn("potatoe");
 
         UserDetails userDetails = customUserService.loadUserByUsername("chris");
         assertEquals(user.getUsername(), userDetails.getUsername());
     }
-    
+    @Test(expected = UsernameNotFoundException.class)
+    public void loadUser_UserNotFound() {
+        customUserService.loadUserByUsername("steve");
+    }
 }
