@@ -35,11 +35,11 @@ public class CustomUserService implements UserDetailsService {
   }
 
 
-  public List<GrantedAuthority> getGrantedAuthorities(UserBean user){
-    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-//    TODO : add this back in for user roles
-//    authorities.add(new SimpleGrantedAuthority(user.getUserRole().getName()));
-
-    return authorities;
-  }
+//  public List<GrantedAuthority> getGrantedAuthorities(UserBean user){
+//    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+////    TODO : add this back in for user roles
+////    authorities.add(new SimpleGrantedAuthority(user.getUserRole().getName()));
+//
+//    return authorities;
+//  }
 }

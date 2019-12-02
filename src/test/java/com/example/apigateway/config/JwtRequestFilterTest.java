@@ -1,22 +1,29 @@
 package com.example.apigateway.config;
 
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import com.example.apigateway.service.CustomUserService;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import org.springframework.http.MediaType;
+
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class JwtRequestFilterTest {
@@ -30,58 +37,50 @@ public class JwtRequestFilterTest {
     @InjectMocks
     JwtRequestFilter jwtRequestFilter;
 
+    @Mock
+    CustomUserService userService;
 
     @Mock
     JwtUtil jwtUtil;
 
-
-    @Test//works
-    public void jwtRequiredRequest_JwtRequestFilter_ValidBearerToken() throws Exception {
-
-        RequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post("/post").contentType(MediaType.APPLICATION_JSON)
-                        .content(createJson("email1@email.com")).header("Authorization", "Bearer 12345678910");
-
-        when(jwtUtil.getUsernameFromToken(anyString())).thenReturn("user1");
+    @Test
+    public void doFilter_Failure() throws ServletException, IOException {
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User("test", "test",
+                true, true, true, true, new ArrayList<>());
+        when(jwtUtil.getUsernameFromToken(anyString())).thenReturn("chris");
+        when(userService.loadUserByUsername(anyString())).thenReturn(userDetails);
         when(jwtUtil.validateToken(anyString(), any())).thenReturn(true);
 
-        try {
-            MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-            assertEquals("", result.getResponse().getContentAsString());
-        } catch (Exception e) {
-            System.out.println("cannot mock static/constructor");
-        }
+        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+        HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+        FilterChain filter = Mockito.mock(FilterChain.class);
+
+        jwtRequestFilter.doFilterInternal(request, response, filter);
     }
+
+    @Test
+    public void doFilter_Success() throws ServletException, IOException {
+
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User("test", "test",
+                true, true, true, true, new ArrayList<>());
+        when(jwtUtil.getUsernameFromToken(anyString())).thenReturn("chris");
+        when(userService.loadUserByUsername(anyString())).thenReturn(userDetails);
+        when(jwtUtil.validateToken(anyString(), any())).thenReturn(true);
+
+        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+        HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+        FilterChain filter = Mockito.mock(FilterChain.class);
+
+        when(request.getHeader(anyString())).thenReturn("Bearer 9876");
+
+        jwtRequestFilter.doFilterInternal(request, response, filter);
+    }
+
 
     private String createJson(String email) {
 
         return "{\"additionalEmail\":\"" + email + "\"" + "}";
     }
 
-    @Test
-    public void jwtRequiredRequest_JwtRequestFilter_EmptyBearerToken() throws Exception {
-
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/profile")
-                .contentType(MediaType.APPLICATION_JSON).content(createJson("email1@email.com"));
-
-        try {
-            MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-            assertEquals("", result.getResponse().getContentAsString());
-        } catch (Exception e) {
-            System.out.println("Missing Bearer Token");
-        }
-    }
-
-    @Test
-    public void jwtRequired_JwtRequestFilter_IllegalBearerToken() throws Exception {
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/profile").contentType(MediaType.APPLICATION_JSON)
-                        .content(createJson("email1@email.com")).header("Authorization", "Bearer 12345678910");
-        try {
-            MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-            assertEquals("", result.getResponse().getContentAsString());
-        } catch (Exception e){
-            System.out.println("invalid bearer token");
-        }
-    }
 
 }

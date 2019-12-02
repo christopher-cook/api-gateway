@@ -52,7 +52,6 @@ public class CustomUserServiceTest {
         user.setEmail("test@bean.com");
         user.setUsername("chris");
         user.setPassword("testPass");
-        user.setRoles("ROLE_ADMIN");
     }
 
     @Test
