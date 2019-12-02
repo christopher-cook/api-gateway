@@ -10,6 +10,13 @@ public class UserBean {
 
   private String password;
 
+  /**
+   *
+   * @param id  Long
+   * @param email String
+   * @param username String
+   * @param password String
+   */
   public UserBean(Long id, String email, String username, String password) {
     this.id = id;
     this.email = email;

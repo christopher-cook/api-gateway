@@ -23,6 +23,12 @@ public class CustomUserService implements UserDetailsService {
   @Autowired
   UserRepository userRepository;
 
+  /**
+   *
+   * @param username String
+   * @return UserDetails
+   * @throws UsernameNotFoundException if user null
+   */
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
 

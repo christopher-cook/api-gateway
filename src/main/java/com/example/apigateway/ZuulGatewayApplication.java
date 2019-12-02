@@ -6,6 +6,10 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @author Christopher Cook
+ * @author Qin Zhu
+ */
 @SpringBootApplication
 @EnableZuulProxy
 @EnableEurekaClient

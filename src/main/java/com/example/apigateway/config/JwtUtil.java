@@ -26,6 +26,12 @@ public class JwtUtil implements Serializable {
     public void setSecret(String secret){
     this.secret = secret;
   }
+
+  /**
+   *
+   * @param userDetails
+   * @return String token
+   */
   public String generateToken(UserDetails userDetails) {
     Map<String, Object> claims = new HashMap<>();
     return doGenerateToken(claims, userDetails.getUsername());

@@ -55,6 +55,7 @@ public class UserBeanTest {
         assertEquals("chris", userBean.getUsername());
     }
 
+
     @Test
     public void setUsername_Success() {
         assertNotEquals("Fred", userBean.getUsername());

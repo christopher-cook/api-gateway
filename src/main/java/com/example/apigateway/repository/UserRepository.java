@@ -12,6 +12,11 @@ public class UserRepository {
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
+  /**
+   *
+   * @param username String
+   * @return UserBean
+   */
   public UserBean getUserByUsername(String username) {
     String sql = "SELECT * FROM users WHERE username = ?";
     return jdbcTemplate.queryForObject(sql, new Object[]{username}, (rs, rowNum) ->

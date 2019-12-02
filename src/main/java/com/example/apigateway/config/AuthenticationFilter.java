@@ -14,11 +14,19 @@ public class AuthenticationFilter extends ZuulFilter {
   @Autowired
   UserRepository userRepository;
 
+  /**
+   *
+   * @return String "pre"
+   */
   @Override
   public String filterType() {
     return "pre";
   }
 
+  /**
+   *
+   * @return int order-by
+   */
   @Override
   public int filterOrder() {
     return 1;
