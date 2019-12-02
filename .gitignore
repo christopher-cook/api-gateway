@@ -33,3 +33,6 @@ build/
 ### Logs ###
 api-gateway.log
 *.gz
+
+### Prop files ###
+*.properties
