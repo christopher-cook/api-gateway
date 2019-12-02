@@ -2,7 +2,8 @@ package com.example.apigateway.bean;
 
 public class UserBean {
 
-  private Long id;
+    public String role;
+    private Long id;
 
   private String email;
 
@@ -47,5 +48,12 @@ public class UserBean {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getRoles() {
+    return role;
+  }
+  public void setRoles(String role) {
+    this.role = role;
   }
 }

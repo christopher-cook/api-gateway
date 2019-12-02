@@ -71,6 +71,7 @@ public class JwtRequestFilterTest {
             System.out.println("Missing Bearer Token");
         }
     }
+
     @Test
     public void jwtRequired_JwtRequestFilter_IllegalBearerToken() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/profile").contentType(MediaType.APPLICATION_JSON)
